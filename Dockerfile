@@ -10,6 +10,7 @@ RUN apk update \
  && GOPATH=/go make GO_TAGS=ui pkg/linux_amd64/nomad \
  && mv /go/src/github.com/hashicorp/nomad/pkg/linux_amd64/nomad /usr/bin/ \
  && rm -rf /go \
+ && rm -rf /tmp/nomad.tar.gz \
  && apk del build
 
 ENTRYPOINT ["nomad"]

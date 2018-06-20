@@ -3,7 +3,7 @@ FROM alpine:3.7
 RUN apk update \
  && apk add -t build go make musl-dev bash git \
  && apk add ca-certificates \
- && wget https://github.com/hashicorp/nomad/archive/v0.8.1.tar.gz -O /tmp/nomad.tar.gz \
+ && wget https://github.com/hashicorp/nomad/archive/v0.8.2.tar.gz -O /tmp/nomad.tar.gz \
  && mkdir -p /go/src/github.com/hashicorp/nomad/ \
  && tar xvf /tmp/nomad.tar.gz --strip-components 1 -C /go/src/github.com/hashicorp/nomad/ \
  && cd /go/src/github.com/hashicorp/nomad/ \

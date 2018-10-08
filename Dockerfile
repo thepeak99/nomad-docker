@@ -1,9 +1,11 @@
 FROM alpine:3.7
 
+ENV NOMAD_VERSION=0.8.6
+
 RUN apk update \
  && apk add -t build go1.10 make musl-dev bash git \
  && apk add ca-certificates \
- && wget https://github.com/hashicorp/nomad/archive/v0.8.5.tar.gz -O /tmp/nomad.tar.gz \
+ && wget https://github.com/hashicorp/nomad/archive/v$NOMAD_VERSION.tar.gz -O /tmp/nomad.tar.gz \
  && mkdir -p /go/src/github.com/hashicorp/nomad/ \
  && tar xvf /tmp/nomad.tar.gz --strip-components 1 -C /go/src/github.com/hashicorp/nomad/ \
  && cd /go/src/github.com/hashicorp/nomad/ \

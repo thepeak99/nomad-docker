@@ -1,17 +1,19 @@
-FROM alpine:3.7
+FROM alpine:3.9
 
-ENV NOMAD_VERSION=0.8.7
+ENV NOMAD_VERSION=0.9.0
 
 RUN apk update \
- && apk add -t build go1.10 make musl-dev bash git \
+ && apk add -t build go make musl-dev bash linux-headers git \
  && apk add ca-certificates \
- && wget https://github.com/hashicorp/nomad/archive/v$NOMAD_VERSION.tar.gz -O /tmp/nomad.tar.gz \
- && mkdir -p /go/src/github.com/hashicorp/nomad/ \
- && tar xvf /tmp/nomad.tar.gz --strip-components 1 -C /go/src/github.com/hashicorp/nomad/ \
- && cd /go/src/github.com/hashicorp/nomad/ \
- && GOPATH=/go make GO_TAGS=ui pkg/linux_amd64/nomad \
+ && mkdir -p /go/src/github.com/hashicorp/ \
+ && cd /go/src/github.com/hashicorp/ \
+ && git clone https://github.com/hashicorp/nomad.git \
+ && cd nomad \
+ && git checkout v$NOMAD_VERSION 2> /dev/null \
+ && ( git cherry-pick a09e3bf1a130cdc70dd07b0d5adc5ab17d0f9131 || true ) 2> /dev/null \
+ && GOPATH=/go PATH=$PATH:/go/bin make GO_TAGS="ui nonvidia" pkg/linux_amd64/nomad \
  && mv /go/src/github.com/hashicorp/nomad/pkg/linux_amd64/nomad /usr/bin/ \
- && rm -rf /go /tmp/nomad.tar.gz /root/.cache \
+ && rm -rf /go /root/.cache \
  && apk del build 
 
 ENTRYPOINT ["nomad"]

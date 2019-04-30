@@ -1,6 +1,6 @@
 FROM alpine:3.7
 
-ENV NOMAD_VERSION=0.8.6
+ENV NOMAD_VERSION=0.8.7
 
 RUN apk update \
  && apk add -t build go1.10 make musl-dev bash git \

@@ -1,6 +1,6 @@
 FROM alpine:3.9
 
-ENV NOMAD_VERSION=0.9.1
+ENV NOMAD_VERSION=0.9.2
 
 RUN apk update \
  && apk add -t build go make musl-dev bash linux-headers git \
@@ -10,7 +10,6 @@ RUN apk update \
  && git clone https://github.com/hashicorp/nomad.git \
  && cd nomad \
  && git checkout v$NOMAD_VERSION 2> /dev/null \
- && ( git cherry-pick a09e3bf1a130cdc70dd07b0d5adc5ab17d0f9131 || true ) 2> /dev/null \
  && GOPATH=/go PATH=$PATH:/go/bin make GO_TAGS="ui nonvidia" pkg/linux_amd64/nomad \
  && mv /go/src/github.com/hashicorp/nomad/pkg/linux_amd64/nomad /usr/bin/ \
  && rm -rf /go /root/.cache \

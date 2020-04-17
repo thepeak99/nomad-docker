@@ -10,9 +10,9 @@ RUN apk update \
  && go get -u github.com/kardianos/govendor \
  && mkdir -p /go/src/github.com/hashicorp/ \
  && cd /go/src/github.com/hashicorp/ \
- && git clone https://github.com/hashicorp/nomad.git \
+ && echo "Cloning into 'nomad'..." \
+ && git clone -b v$NOMAD_VERSION --depth 1 https://github.com/hashicorp/nomad.git 2> /dev/null \
  && cd nomad \
- && git checkout v$NOMAD_VERSION 2> /dev/null \
  # See https://github.com/hashicorp/nomad/issues/6433 \
  && govendor fetch golang.org/x/net/http2 \
  && make GO_TAGS="ui nonvidia" pkg/linux_amd64/nomad \

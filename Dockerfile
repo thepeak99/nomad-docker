@@ -1,6 +1,6 @@
 FROM alpine:3.11
 
-ENV NOMAD_VERSION=0.11.0
+ENV NOMAD_VERSION=0.11.1
 
 RUN apk update \
  && apk add -t build go make musl-dev bash linux-headers git tzdata \
